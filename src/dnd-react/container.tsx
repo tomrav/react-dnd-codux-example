@@ -1,17 +1,17 @@
-import update from 'immutability-helper'
-import type { FC } from 'react'
-import { useCallback, useState } from 'react'
+import update from 'immutability-helper';
+import type { FC } from 'react';
+import { useCallback, useState } from 'react';
 
-import { Card } from './card'
-import styles from './card.module.scss'
+import { Card } from './card';
+import styles from './container.module.scss';
 
 export interface Item {
-    id: number
-    text: string
+    id: number;
+    text: string;
 }
 
 export interface ContainerState {
-    cards: Item[]
+    cards: Item[];
 }
 
 export const Container: FC = () => {
@@ -45,7 +45,7 @@ export const Container: FC = () => {
                 id: 7,
                 text: 'PROFIT',
             },
-        ])
+        ]);
 
         const moveCard = useCallback((dragIndex: number, hoverIndex: number) => {
             setCards((prevCards: Item[]) =>
@@ -54,29 +54,22 @@ export const Container: FC = () => {
                         [dragIndex, 1],
                         [hoverIndex, 0, prevCards[dragIndex] as Item],
                     ],
-                }),
-            )
-        }, [])
+                })
+            );
+        }, []);
 
-        const renderCard = useCallback(
-            (card: { id: number; text: string }, index: number) => {
-                return (
-                    <Card
-                        key={card.id}
-                        index={index}
-                        id={card.id}
-                        text={card.text}
-                        moveCard={moveCard}
-                    />
-                )
-            },
-            [],
-        )
+        const renderCard = useCallback((card: { id: number; text: string }, index: number) => {
+            return (
+                <Card
+                    key={card.id}
+                    index={index}
+                    id={card.id}
+                    text={card.text}
+                    moveCard={moveCard}
+                />
+            );
+        }, []);
 
-        return (
-            <>
-                <div className={styles.root}>{cards.map((card, i) => renderCard(card, i))}</div>
-            </>
-        )
+        return <div className={styles.root}>{cards.map((card, i) => renderCard(card, i))}</div>;
     }
-}
+};
